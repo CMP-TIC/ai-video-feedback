@@ -1,0 +1,4 @@
+interface:
+  display_name: "Feedback desde vídeo"
+  short_description: "Convierte vídeos y comentarios en tareas para tu agente"
+  default_prompt: "Usa $video-feedback para analizar esta grabación y convertir mis comentarios en cambios concretos con evidencias y criterios de aceptación."

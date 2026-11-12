@@ -1,6 +1,6 @@
 # Video Feedback
 
-Utilidad local y skill global para convertir una grabación y tus comentarios en feedback útil para un agente. Python 3 + FFmpeg; sin dependencias Python ni claves API.
+Utilidad local y skill para agentes para convertir una grabación y tus comentarios en feedback útil para un agente. Python 3 + FFmpeg; sin dependencias Python ni claves API.
 
 ## Uso con tu agente
 
@@ -30,9 +30,43 @@ python3 skills/video-feedback/scripts/analyze_video.py /ruta/demo.mkv \
 
 Las marcas son posiciones de búsqueda aproximadas en el vídeo original. El audio empieza en el segundo indicado por `--start`. El máximo de capturas predeterminado es 24; al alcanzarlo, el muestreo se distribuye por el tramo seleccionado. No detecta escenas ni garantiza capturar todas las acciones entre muestras. Las carpetas existentes nunca se sobrescriben. En caso de fallo puede quedar una carpeta parcial; el proceso devuelve un código distinto de cero.
 
-## Instalación global en este equipo
+## Instalación
 
-La fuente está en `skills/video-feedback`. Los enlaces en `~/.codex/skills/video-feedback` y `~/.agents/skills/video-feedback` apuntan a esa misma carpeta, por lo que los cambios se mantienen en un único sitio. Invócala como `$video-feedback`.
+Necesitas Git, Python 3.10 o posterior y FFmpeg (incluye `ffprobe`). En Debian/Ubuntu:
+
+```bash
+sudo apt update
+sudo apt install git python3 ffmpeg
+git clone https://github.com/CMP-TIC/video-feedback.git
+cd video-feedback
+python3 skills/video-feedback/scripts/analyze_video.py --help
+```
+
+En macOS puedes instalar los requisitos con `brew install python ffmpeg git`.
+No necesitas instalar paquetes con `pip` ni configurar claves API.
+
+### Registrar la skill en Codex y otros agentes
+
+Desde la raíz del repositorio, en Linux/macOS:
+
+```bash
+mkdir -p "$HOME/.codex/skills" "$HOME/.agents/skills"
+ln -s "$PWD/skills/video-feedback" "$HOME/.codex/skills/video-feedback"
+ln -s "$PWD/skills/video-feedback" "$HOME/.agents/skills/video-feedback"
+```
+
+Si alguno de los destinos ya existe, revisa su contenido antes de cambiarlo.
+Los enlaces comparten la misma fuente; conserva el clon en su ubicación.
+Abre una sesión nueva del agente e invoca `$video-feedback`.
+También puedes usar el script directamente, sin registrar la skill.
+
+## Qué compartir
+
+El repositorio contiene la skill, el script y sus pruebas. Los vídeos y la
+carpeta `video-analysis/` no forman parte del repositorio. El procesamiento
+se realiza en tu equipo; el script no sube archivos a servicios externos.
+Si entregas las evidencias a un agente externo, revisa antes las capturas,
+el audio y los metadatos: pueden contener información del vídeo y rutas locales.
 
 ## Validación
 
@@ -44,4 +78,6 @@ Las pruebas generan vídeos sintéticos y verifican extracción con audio, víde
 
 ## Procedencia
 
-Adaptada del patrón de extracción de `analyze_video.py` en `/opt/odoo16_dev/temp/commercial_exports_workflow`: metadatos con ffprobe, capturas y audio con ffmpeg. Se han añadido errores verificables, muestreo acotado, selección de tramos y contexto para el agente. El original y sus vídeos se conservan en su ubicación; `install_and_test.py` era una utilidad específica de Odoo y no forma parte de esta herramienta.
+Adaptada de una utilidad interna de extracción de evidencias con FFmpeg.
+Añade errores verificables, muestreo acotado, selección de tramos y contexto
+para el agente. No incluye vídeos ni datos de los proyectos de origen.

@@ -1,4 +1,4 @@
-# Video Feedback
+# AI Video Feedback
 
 Utilidad local y skill para agentes para convertir una grabación y tus comentarios en feedback útil para un agente. Python 3 + FFmpeg; sin dependencias Python ni claves API.
 
@@ -37,8 +37,8 @@ Necesitas Git, Python 3.10 o posterior y FFmpeg (incluye `ffprobe`). En Debian/U
 ```bash
 sudo apt update
 sudo apt install git python3 ffmpeg
-git clone https://github.com/CMP-TIC/video-feedback.git
-cd video-feedback
+git clone https://github.com/CMP-TIC/ai-video-feedback.git
+cd ai-video-feedback
 python3 skills/video-feedback/scripts/analyze_video.py --help
 ```
 
